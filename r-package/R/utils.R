@@ -230,11 +230,12 @@ assert_points_input <- function(df, name) {
 #'
 #' @param decay_function Name of decay function.
 #' @param decay_value Value of decay parameter.
+#' @param cutoffs Value of cutoffs parameter.
 #'
 #' @return A `list` with the validated decay function and parameter value.
 #' @family support functions
 
-assert_decay_function <- function(decay_function, decay_value) {
+assert_decay_function <- function(decay_function, decay_value, cutoffs) {
   # list of all decay functions
   decay_functions  <- c('STEP','EXPONENTIAL','FIXED_EXPONENTIAL','LINEAR','LOGISTIC')
 
@@ -262,6 +263,12 @@ assert_decay_function <- function(decay_function, decay_value) {
     if (decay_value < 1) {
       stop(paste0(decay_value, " is not a valid decay_value parameter for the ", decay_function, " decay function.\n",
                   "Please enter a value greater than or equal to 1."))
+    }
+  }
+
+  if (decay_function %chin% c("STEP")) {
+    if (12 < length(cutoffs)) {
+      stop(gettextf("cutoffs length is %i, but maximum number of cutoffs allowed in a accessibility analysis is 12", length(cutoffs)))
     }
   }
 

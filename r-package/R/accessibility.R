@@ -37,7 +37,8 @@
 #'                       and 'logistic'. Defaults to 'step', which yields
 #'                       cumulative opportunities accessibility metrics.
 #'                       More info in `details`.
-#' @param cutoffs numeric. Cutoff times in minutes for calculating cumulative
+#' @param cutoffs numeric. Cutoff times in minutes (maximum length of 12)
+#'                for calculating cumulative
 #'                opportunities accessibility when using the 'step decay function'.
 #'                This parameter has different effects for each of the other decay
 #'                functions: it indicates the 'median' (or inflection point) of
@@ -320,7 +321,7 @@ accessibility <- function(r5r_core,
   cutoffs <- as.integer(cutoffs)
 
   # decay
-  decay_list <- assert_decay_function(decay_function, decay_value)
+  decay_list <- assert_decay_function(decay_function, decay_value, cutoffs)
 
   # set r5r_core options ----------------------------------------------------
 
